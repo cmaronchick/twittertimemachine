@@ -10,4 +10,32 @@ var listOfItems = <ul className="list-of-items">
                   </ul>;
 // var reactFragment = { h1, p };
 // var section = React.createElement('section', { className: 'container' }, reactFragment);
-ReactDOM.render(listOfItems, document.getElementById('react-application'));
+var ReactClass = React.createClass({
+    getInitialState: function () {
+        return {
+            isHeaderHidden: false,
+            title: 'Stateful React Component'
+        };
+    },
+
+    handleClick: function () {
+        this.setState({
+            isHeaderHidden: !this.state.isHeaderHidden
+        });
+    },
+
+    render: function () {
+        var headerElement = React.createElement('h1', { className: 'header', key: 'header'}, this.state.title);
+        var buttonElement = React.createElement('button', { className: 'btn btn-defatul', onClick: this.handleClick, key: 'button' }, 'Toggle header');
+
+        if (this.state.isHeaderHidden) {
+            return React.createElement('div', null, { buttonElement });
+        }
+        return React.createElement('div', null, { buttonElement, headerElement });
+    }
+});
+
+ReactDOM.render({ listOfItems, ReactClass }, document.getElementById('react-application'));
+
+
+

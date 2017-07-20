@@ -18741,10 +18741,61 @@ if (process.env.NODE_ENV !== 'production') {
 
 }).call(this,require('_process'))
 },{"./lib/Object.assign":50,"./lib/React":52,"./lib/deprecated":131,"_process":27}],156:[function(require,module,exports){
+'use strict';
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var reactElement = React.createElement('h1', { className: 'header' }, 'This is React');
-ReactDOM.render(reactElement, document.getElementById('react-application'));
+// var h1 = React.createElement('h1', { className: 'header' }, 'This is React');
+// var p = React.createElement('p', {className: 'content', key: 'content' }, 'And that\'s how it works.');
+var listOfItems = React.createElement(
+    'ul',
+    { className: 'list-of-items' },
+    React.createElement(
+        'li',
+        { className: 'item-1' },
+        'Item 1'
+    ),
+    React.createElement(
+        'li',
+        { className: 'item-2' },
+        'Item 2'
+    ),
+    React.createElement(
+        'li',
+        { className: 'item-3' },
+        'Item 3'
+    )
+);
+// var reactFragment = { h1, p };
+// var section = React.createElement('section', { className: 'container' }, reactFragment);
+var ReactClass = React.createClass({
+    displayName: 'ReactClass',
+
+    getInitialState: function getInitialState() {
+        return {
+            isHeaderHidden: false,
+            title: 'Stateful React Component'
+        };
+    },
+
+    handleClick: function handleClick() {
+        this.setState({
+            isHeaderHidden: !this.state.isHeaderHidden
+        });
+    },
+
+    render: function render() {
+        var headerElement = React.createElement('h1', { className: 'header', key: 'header' }, this.state.title);
+        var buttonElement = React.createElement('button', { className: 'btn btn-defatul', onClick: this.handleClick, key: 'button' }, 'Toggle header');
+
+        if (this.state.isHeaderHidden) {
+            return React.createElement('div', null, { buttonElement: buttonElement });
+        }
+        return React.createElement('div', null, { buttonElement: buttonElement, headerElement: headerElement });
+    }
+});
+
+ReactDOM.render({ listOfItems: listOfItems, ReactClass: ReactClass }, document.getElementById('react-application'));
 
 },{"react":155,"react-dom":28}]},{},[156]);
